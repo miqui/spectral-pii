@@ -1,0 +1,17 @@
+{
+  "name": "spectral-pii",
+  "version": "0.1.0",
+  "description": "Spectral rulesets to detect potential PII in OpenAPI 3.x documents",
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=20" },
+  "files": ["ruleset.yaml", "presets", "functions"],
+  "scripts": {
+    "test": "vitest run",
+    "lint:clean": "spectral lint oas3.2/clean.yaml"
+  },
+  "devDependencies": {
+    "@stoplight/spectral-cli": "6.16.0",
+    "vitest": "^2.1.0"
+  }
+}

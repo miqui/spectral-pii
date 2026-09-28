@@ -1,0 +1,35 @@
+{
+  "clean.yaml": {},
+  "dirty-naming.yaml": { "pii-property-name": 3 },
+  "dirty-formats.yaml": {
+    "pii-format-hint": 2,
+    "pii-property-name": 2
+  },
+  "dirty-patterns.yaml": { "pii-pattern-hint": 2 },
+  "dirty-example-contact.yaml": {
+    "pii-example-email": 1,
+    "pii-example-phone": 1,
+    "pii-example-gov-id": 1,
+    "pii-example-address": 1,
+    "pii-property-name": 4
+  },
+  "dirty-example-payment.yaml": {
+    "pii-example-payment-card": 1,
+    "pii-property-name": 2
+  },
+  "dirty-example-secrets.yaml": {
+    "pii-secret-in-example": 3,
+    "pii-property-name": 1
+  },
+  "dirty-example-infra.yaml": {
+    "pii-example-ip-geo": 2,
+    "pii-property-name": 2
+  },
+  "dirty-descriptions.yaml": { "pii-description-pii": 1 },
+  "dirty-server-credentials.yaml": { "pii-credentials-in-server-url": 1 },
+  "dirty-security-scheme.yaml": {
+    "pii-security-scheme-credentials": 1,
+    "pii-description-pii": 1
+  },
+  "suppression.yaml": { "pii-property-name": 1 }
+}

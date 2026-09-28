@@ -1,0 +1,15 @@
+extends: ["./default.yaml"]
+rules:
+  pii-property-name: error
+  pii-format-hint: error
+  pii-pattern-hint: error
+  pii-example-email: error
+  pii-example-phone: error
+  pii-example-gov-id: error
+  pii-example-address: error
+  pii-example-payment-card: error
+  pii-example-ip-geo: error
+  pii-secret-in-example: error
+  pii-description-pii: error
+  pii-credentials-in-server-url: error
+  pii-security-scheme-credentials: error

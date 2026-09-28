@@ -1,0 +1,55 @@
+openapi: 3.2.0
+info:
+  title: Dirty Descriptions Service
+  summary: Fixture exercising pii-description-pii
+  description: Fixture API exercising the pii-description-pii rule.
+  version: 1.0.0
+  contact:
+    name: Fixture Team
+    url: https://api.example.com/support
+servers:
+  - url: https://api.example.com/v1
+tags:
+  - name: support
+    description: Support operations
+paths:
+  /support:
+    get:
+      operationId: getSupportInfo
+      tags:
+        - support
+      summary: Get support info
+      description: Returns support contact info.
+      responses:
+        "200":
+          description: Support info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SupportInfo"
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+components:
+  schemas:
+    SupportInfo:
+      type: object
+      description: "Contact support at support@example.com or +1 212 555 0142"
+      properties:
+        message:
+          type: string
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string

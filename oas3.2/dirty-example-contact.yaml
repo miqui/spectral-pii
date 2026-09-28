@@ -1,0 +1,77 @@
+openapi: 3.2.0
+info:
+  title: Dirty Example Contact Service
+  summary: Fixture exercising example-scanner contact modes
+  description: Fixture API exercising example-scanner contact modes.
+  version: 1.0.0
+  contact:
+    name: Fixture Team
+    url: https://api.example.com/support
+servers:
+  - url: https://api.example.com/v1
+tags:
+  - name: customers
+    description: Customer operations
+paths:
+  /customers:
+    post:
+      operationId: createCustomer
+      tags:
+        - customers
+      summary: Create a customer
+      description: Creates a customer record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+            examples:
+              sample:
+                summary: Sample customer
+                value:
+                  name: Jane Doe
+                  email: jane.doe@example.com
+                  phone: "+1 212 555 0142"
+                  ssn: "555-01-2345"
+                  street: "1600 Pennsylvania Ave"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        ssn:
+          type: string
+        street:
+          type: string
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string

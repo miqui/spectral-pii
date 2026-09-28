@@ -1,0 +1,61 @@
+openapi: 3.2.0
+info:
+  title: Dirty Security Scheme Service
+  summary: Fixture exercising pii-security-scheme-credentials
+  description: Fixture API exercising the pii-security-scheme-credentials rule.
+  version: 1.0.0
+  contact:
+    name: Fixture Team
+    url: https://api.example.com/support
+servers:
+  - url: https://api.example.com/v1
+tags:
+  - name: secure
+    description: Secure operations
+paths:
+  /secure:
+    get:
+      operationId: getSecure
+      tags:
+        - secure
+      summary: Get secure resource
+      description: Returns a protected resource.
+      security:
+        - basic: []
+      responses:
+        "200":
+          description: Secure resource
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SecureResource"
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+components:
+  securitySchemes:
+    basic:
+      type: http
+      scheme: basic
+      description: "Use key AKIAABCDEFGHIJKLMNOP"
+  schemas:
+    SecureResource:
+      type: object
+      properties:
+        ok:
+          type: boolean
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string

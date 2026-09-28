@@ -1,0 +1,93 @@
+openapi: 3.2.0
+info:
+  title: Suppression Fixture Service
+  summary: Fixture proving x-pii subtree-scoped suppression
+  description: Fixture API exercising x-pii suppression scoping.
+  version: 1.0.0
+  contact:
+    name: Fixture Team
+    url: https://api.example.com/support
+servers:
+  - url: https://api.example.com/v1
+tags:
+  - name: customers
+    description: Customer operations
+paths:
+  /customers:
+    post:
+      operationId: createCustomer
+      tags:
+        - customers
+      summary: Create a customer
+      description: Creates a customer record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            x-pii:
+              justification: "fixture: reviewed"
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                phone:
+                  type: string
+                ssn:
+                  type: string
+            examples:
+              sample:
+                summary: Sample customer
+                value:
+                  name: Jane Doe
+                  email: jane.doe@example.com
+                  phone: "+1 212 555 0142"
+                  ssn: "555-01-2345"
+      responses:
+        "201":
+          description: Created
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+  /contacts2:
+    post:
+      operationId: createContact2
+      tags:
+        - customers
+      summary: Create a contact2 record
+      description: Creates a contact2 record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  x-pii:
+                    justification: "fixture: reviewed"
+                date_of_birth:
+                  type: string
+      responses:
+        "201":
+          description: Created
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string

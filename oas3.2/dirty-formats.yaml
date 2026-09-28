@@ -1,0 +1,65 @@
+openapi: 3.2.0
+info:
+  title: Dirty Formats Service
+  summary: Fixture exercising pii-format-hint
+  description: Fixture API exercising the pii-format-hint rule.
+  version: 1.0.0
+  contact:
+    name: Fixture Team
+    url: https://api.example.com/support
+servers:
+  - url: https://api.example.com/v1
+tags:
+  - name: profiles
+    description: Profile operations
+paths:
+  /profiles:
+    get:
+      operationId: listProfiles
+      tags:
+        - profiles
+      summary: List profiles
+      description: Returns profiles.
+      responses:
+        "200":
+          description: A list of profiles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Profile"
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+components:
+  schemas:
+    Profile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        contact_email:
+          type: string
+          format: email
+        mobile:
+          type: string
+          format: phone
+      required:
+        - id
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string

@@ -1,0 +1,14 @@
+name: ci
+on: [pull_request]
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20, cache: npm }
+      - run: npm ci
+      - name: Lint clean fixture (must be zero findings)
+        run: npx spectral lint oas3.2/clean.yaml
+      - name: Ruleset harness (fixture assertions)
+        run: npm test

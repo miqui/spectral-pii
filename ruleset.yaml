@@ -1,0 +1,89 @@
+extends: ["spectral:oas"]
+functions:
+  - pii-name
+  - format-hint
+  - pattern-hint
+  - example-scanner
+  - description-scan
+  - server-url
+  - security-scheme-scan
+rules:
+  oas3-schema: off
+  pii-property-name:
+    description: Property name looks like PII
+    message: "{{error}}"
+    given: $..properties[*]
+    severity: warn
+    then: { function: pii-name }
+  pii-format-hint:
+    description: Schema format suggests PII
+    message: "{{error}}"
+    given: $..format
+    severity: warn
+    then: { function: format-hint }
+  pii-pattern-hint:
+    description: Schema pattern suggests PII capture
+    message: "{{error}}"
+    given: $..pattern
+    severity: warn
+    then: { function: pattern-hint }
+  pii-example-email:
+    description: Example value contains an email address
+    message: "{{error}}"
+    given: $..examples[*]
+    severity: error
+    then: { function: example-scanner, functionOptions: { mode: email } }
+  pii-example-phone:
+    description: Example value contains a phone number
+    message: "{{error}}"
+    given: $..examples[*]
+    severity: error
+    then: { function: example-scanner, functionOptions: { mode: phone } }
+  pii-example-gov-id:
+    description: Example value contains a government-ID-shaped string
+    message: "{{error}}"
+    given: $..examples[*]
+    severity: error
+    then: { function: example-scanner, functionOptions: { mode: gov-id } }
+  pii-example-address:
+    description: Example value contains a street-address-shaped string
+    message: "{{error}}"
+    given: $..examples[*]
+    severity: error
+    then: { function: example-scanner, functionOptions: { mode: address } }
+  pii-example-payment-card:
+    description: Example value contains a Luhn-valid payment card number
+    message: "{{error}}"
+    given: $..examples[*]
+    severity: error
+    then: { function: example-scanner, functionOptions: { mode: card } }
+  pii-example-ip-geo:
+    description: Example value contains an IP address or lat/long
+    message: "{{error}}"
+    given: $..examples[*]
+    severity: info
+    then: { function: example-scanner, functionOptions: { mode: ip-geo } }
+  pii-secret-in-example:
+    description: Example value contains a secret or token
+    message: "{{error}}"
+    given: $..examples[*]
+    severity: error
+    then: { function: example-scanner, functionOptions: { mode: secret } }
+  pii-description-pii:
+    description: Description prose contains PII-shaped values
+    message: "{{error}}"
+    given: $..description
+    severity: warn
+    then: { function: description-scan }
+  pii-credentials-in-server-url:
+    description: Server URL embeds credentials (user:pass@host)
+    message: "{{error}}"
+    given: $..servers[*].url
+    severity: error
+    then: { function: server-url }
+  pii-security-scheme-credentials:
+    description: Security scheme carries embedded credentials
+    message: "{{error}}"
+    given: $.components.securitySchemes[*]
+    severity: warn
+    then: { function: security-scheme-scan }

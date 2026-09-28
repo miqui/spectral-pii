@@ -1,0 +1,68 @@
+openapi: 3.2.0
+info:
+  title: Dirty Example Payment Service
+  summary: Fixture exercising example-scanner card mode
+  description: Fixture API exercising example-scanner card mode.
+  version: 1.0.0
+  contact:
+    name: Fixture Team
+    url: https://api.example.com/support
+servers:
+  - url: https://api.example.com/v1
+tags:
+  - name: payments
+    description: Payment operations
+paths:
+  /payments:
+    post:
+      operationId: createPayment
+      tags:
+        - payments
+      summary: Create a payment
+      description: Creates a payment record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment"
+            examples:
+              sample:
+                summary: Sample payment
+                value:
+                  card_number: "4111 1111 1111 1111"
+                  iban: "GB82 WEST 1234 5698 7654 32"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+components:
+  schemas:
+    Payment:
+      type: object
+      properties:
+        card_number:
+          type: string
+        iban:
+          type: string
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string

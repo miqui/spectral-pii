@@ -1,0 +1,78 @@
+openapi: 3.2.0
+info:
+  title: Dirty Example Infra Service
+  summary: Fixture exercising example-scanner ip-geo mode
+  description: Fixture API exercising example-scanner ip-geo mode.
+  version: 1.0.0
+  contact:
+    name: Fixture Team
+    url: https://api.example.com/support
+servers:
+  - url: https://api.example.com/v1
+tags:
+  - name: devices
+    description: Device operations
+paths:
+  /devices:
+    post:
+      operationId: createDevice
+      tags:
+        - devices
+      summary: Create a device record
+      description: Creates a device record.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Device"
+            examples:
+              sample:
+                summary: Sample device
+                value:
+                  ip: "192.0.2.7"
+                  host: "example.com"
+                  location:
+                    latitude: 38.8977
+                    longitude: -77.0365
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Device"
+        default:
+          description: Unexpected error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+components:
+  schemas:
+    Device:
+      type: object
+      properties:
+        ip:
+          type: string
+        host:
+          type: string
+        location:
+          type: object
+          properties:
+            latitude:
+              type: number
+            longitude:
+              type: number
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
